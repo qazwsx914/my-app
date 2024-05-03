@@ -2,6 +2,27 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  fetch('https://kortep.pythonanywhere.com/', {
+    mode: 'cors',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      version: '1.0',
+      session: { new: false }, // Если сессия новая
+      request: { original_utterance: 'хорошо' } // Пример запроса
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log( 'log:', data); // Данные, полученные с сервера Flask
+  })
+  .catch(error => {
+    console.error('Ошибка:', error);
+  });
+  console.log('ok');
+
   return (
     <div className="App">
       <header className="App-header">
@@ -21,5 +42,8 @@ function App() {
     </div>
   );
 }
+
+
+
 
 export default App;
